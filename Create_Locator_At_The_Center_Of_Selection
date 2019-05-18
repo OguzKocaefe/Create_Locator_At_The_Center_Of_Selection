@@ -1,0 +1,22 @@
+import maya.cmds as cmds
+
+selection = cmds.polyListComponentConversion( tv=True )
+cmds.select(selection)
+
+selectedVerts = cmds.ls( sl=True, fl=True )
+print selectedVerts
+
+posSelectedVertsx = cmds.xform( selectedVerts, query=True, translation=True, worldSpace=True )
+posSelectedVertsxX = posSelectedVertsx[0::3]
+posSelectedVertsxY = posSelectedVertsx[1::3]
+posSelectedVertsxZ = posSelectedVertsx[2::3]
+
+avgX = sum(posSelectedVertsxX)/len(posSelectedVertsxX)
+avgY = sum(posSelectedVertsxY)/len(posSelectedVertsxY)
+avgZ = sum(posSelectedVertsxZ)/len(posSelectedVertsxZ)
+
+cmds.spaceLocator( p=(avgX, avgY, avgZ), a=True )
+
+print avgX
+print avgY
+print avgZ
